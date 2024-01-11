@@ -3,9 +3,16 @@ const Student = require('../models/student')
  
 const studentRouter = express.Router();
 
+
 studentRouter.get('/', async (req, res) => {
-    res.status(200).json("Welcome to Student info system")
-});
+ 
+    try {
+        const data = await Student.find();
+        res.status(200).json(data);
+    } catch (err) {
+        res.status(400).json(err)
+    }
+})
 
 studentRouter.post('/', async (req, res) => {
     try {

@@ -10,7 +10,7 @@ function Navbar() {
                 <li className="nav-item"><NavLink className="nav-link" to='/home'>Home</NavLink></li> 
                 <li className="nav-item"><NavLink className="nav-link" to='/register'>Register</NavLink></li> 
                 <li className="nav-item"><NavLink className="nav-link" to='/contact'>Contact Us</NavLink></li>    
-                <li className="nav-item"><NavLink className="nav-link" to='/abput'>About</NavLink></li> 
+                <li className="nav-item"><NavLink className="nav-link" to='/about'>About</NavLink></li> 
             </ul>
             </div>
         </nav>

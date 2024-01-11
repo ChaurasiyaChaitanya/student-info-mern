@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 
 
-function Register() {
+function Register(props) {
+
+    const {handleGetData} = props;
 
     const [formData, setFormData] = useState({
         roll_number: "",
@@ -56,6 +58,7 @@ function Register() {
         }
 
         handleOnClose();
+        handleGetData();
     }
 
     const handleOnClose = () => {
