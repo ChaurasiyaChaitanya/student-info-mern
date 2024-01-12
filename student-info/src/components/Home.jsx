@@ -36,6 +36,19 @@ function Home() {
             window.alert(err.message);
         }
     }
+
+    const handleDelete = async (id) => {
+        try {
+            if(window.confirm("Do you want to delete this record?")) {
+                const res = await axios.delete(`http://localhost:5000/students/${id}`);
+                window.alert(res.data.message)
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+ 
+        handleGetData();
+    }
  
     return (
         <>
@@ -64,7 +77,7 @@ function Home() {
                     <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#studentModal">Add Student Data</button>
                 </div>
                 <Register handleGetData={handleGetData} update={update} setUpdate={setUpdate} updateData={updateData}/>
-                <Table data={stuData} handleGetDataForUpdate={handleGetDataForUpdate}/>
+                <Table data={stuData} handleGetDataForUpdate={handleGetDataForUpdate} handleDelete={handleDelete}/>
             </div>
         </>
     );

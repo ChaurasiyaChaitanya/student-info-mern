@@ -80,5 +80,21 @@ studentRouter.patch('/:id', async (req, res) => {
     }
 })
 
+studentRouter.delete('/:id', async (req, res) => {
+    try {
+        const stuId = req.params.id;
+        const studentData = await Student.findById(stuId);
+ 
+        if(studentData) {
+            await Student.findByIdAndDelete(stuId);
+            res.status(200).json({message: "Student data Deleted successfully!"});
+        } else {
+            res.status(400).json({message: "No data found to perform Delete operation!"});
+        }
+    } catch (err) {
+        res.status(400).json(err);
+    }
+})
+
 
 module.exports = studentRouter;

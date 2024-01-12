@@ -34,6 +34,7 @@ function Table(props) {
                             <td>{stu.status}</td>
                             <td>
                             <button className='btnc border-0 bg-transparent' data-toggle="modal" data-target="#studentModal" onClick={() => props.handleGetDataForUpdate(stu._id)}><Icon className="bg-primary" name="edit" tooltip="Edit" theme="dark" size="small" /></button>
+                            <button className='btnc border-0 bg-transparent' onClick={() => props.handleDelete(stu._id)}><Icon className="bg-danger" name="delete" tooltip="Delete" theme="dark" size="small" /></button>
                             </td>
                         </tr>
                         )
