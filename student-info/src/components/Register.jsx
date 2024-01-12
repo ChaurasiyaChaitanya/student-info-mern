@@ -4,7 +4,7 @@ import axios from 'axios';
 
 function Register(props) {
 
-    const {handleGetData} = props;
+    const {handleGetData, update, updateData, setUpdate} = props;
 
     const [formData, setFormData] = useState({
         roll_number: "",
@@ -14,6 +14,10 @@ function Register(props) {
         sub3_marks: "",
         remarks: ""
     })
+
+    useEffect(() => {
+        update ? setFormData(updateData) : setFormData((preState) => preState)
+    }, [update, updateData])
 
     const [total, setTotal] = useState("");
     const [status, setStatus] = useState("");
@@ -61,6 +65,27 @@ function Register(props) {
         handleGetData();
     }
 
+    const handleUpdate = async (e, id) => {
+        e.preventDefault(); 
+ 
+        const studentData = {...formData, total_marks: total, status: status};
+ 
+        console.log(studentData);
+ 
+        try {
+            if(window.confirm("Do you want to update this record?")) {
+                const res = await axios.patch(`http://localhost:5000/students/${id}`, studentData);
+                console.log(res);
+                window.alert(res.data.message);
+            }
+        } catch (error) {
+            window.alert(error.message);
+        }
+        
+        handleOnClose();
+        handleGetData();
+    }
+
     const handleOnClose = () => {
         setFormData({
             roll_number: "",
@@ -72,6 +97,7 @@ function Register(props) {
         });
         setTotal("");
         setStatus("");
+        setUpdate(false);
     }
 
     return (
@@ -80,7 +106,7 @@ function Register(props) {
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="studentModalLabel">Students Gallary : Registration</h5>
+                            <h5 className="modal-title" id="studentModalLabel">Students Gallary : {update ? "Update" : "Registration"} </h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -90,7 +116,7 @@ function Register(props) {
                                 <div className="d-flex justify-content-around">
                                     <div className="form-group">
                                         <label htmlFor="roll_number" className="col-form-label">Roll Number</label>
-                                        <input type="text" className="form-control" id="roll_number" name="roll_number" onChange={handleOnChange} value={formData.roll_number} />
+                                        <input type="text" className="form-control" id="roll_number" name="roll_number" onChange={handleOnChange} value={formData.roll_number} readOnly={update ? true : false}/>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="student_name" className="col-form-label">Student Name</label>
@@ -131,7 +157,7 @@ function Register(props) {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleOnClose}>Close</button>
-                            <button type="button" form="stu-form" className="btn btn-primary" data-dismiss="modal" onClick={handleSubmit}>Save</button>
+                            <button type="button" form="stu-form" className="btn btn-primary" data-dismiss="modal" onClick={update ? (e) => handleUpdate(e, formData._id) : handleSubmit}>Save</button>
                         </div>
                     </div>
                 </div>

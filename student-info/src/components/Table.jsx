@@ -16,7 +16,7 @@ function Table(props) {
                         <th scope='col'>Marks: Subject 3</th>
                         <th scope='col'>Total Marks</th>
                         <th scope='col'>Status</th>
-                        {/* <th scope='col'>Action</th> */}
+                        <th scope='col'>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,6 +32,9 @@ function Table(props) {
                             <td>{stu.sub3_marks}</td>
                             <td>{stu.total_marks}</td>
                             <td>{stu.status}</td>
+                            <td>
+                            <button className='btnc border-0 bg-transparent' data-toggle="modal" data-target="#studentModal" onClick={() => props.handleGetDataForUpdate(stu._id)}><Icon className="bg-primary" name="edit" tooltip="Edit" theme="dark" size="small" /></button>
+                            </td>
                         </tr>
                         )
                     })}

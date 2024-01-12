@@ -11,6 +11,9 @@ function Home() {
     const [sortBy, setSortBy] = useState("");
     const [sortType, setSortType] = useState("");
 
+    const [update, setUpdate] = useState(false);
+    const [updateData, setUpdateData] = useState({});
+
     const handleGetData = async () => {
         try {
             const res = await axios.get(`http://localhost:5000/students?search=${search}&sortBy=${sortBy}&sortType=${sortType}`);
@@ -20,13 +23,20 @@ function Home() {
         }
     }
 
-
     useEffect(() => {
         handleGetData();
     }, [search, sortBy, sortType]);
 
-
-
+    const handleGetDataForUpdate = async (id) => {
+        setUpdate(true);
+        try {
+            const res = await axios.get(`http://localhost:5000/students/${id}`);
+            setUpdateData(res.data);
+        } catch (err) {
+            window.alert(err.message);
+        }
+    }
+ 
     return (
         <>
             <div className="container mt-4">
@@ -53,8 +63,8 @@ function Home() {
                     </select>
                     <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#studentModal">Add Student Data</button>
                 </div>
-                <Register handleGetData={handleGetData} />
-                <Table data={stuData} />
+                <Register handleGetData={handleGetData} update={update} setUpdate={setUpdate} updateData={updateData}/>
+                <Table data={stuData} handleGetDataForUpdate={handleGetDataForUpdate}/>
             </div>
         </>
     );
